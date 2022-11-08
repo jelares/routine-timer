@@ -6,8 +6,8 @@ import TimePicker from 'react-time-picker';
 function Timer() {
     const [date, setDate] = useState(new Date());
     const dateTime = usTimeInEuropean(date);
-    const [wakeTime, onWakeTimeChange] = useState('7:00');
-    const [bedTime, onBedTimeChange] = useState('23:00');
+    const [wakeTime, onWakeTimeChange] = useState(getWakeTimeCache());
+    const [bedTime, onBedTimeChange] = useState(getBedTimeCache());
     const wakeMinutes = getTimeDifference("00:00", wakeTime);
     const bedMinutes = getTimeDifference("00:00", bedTime);
     const timeMinutes = getTimeDifference("00:00", dateTime);
@@ -19,6 +19,43 @@ function Timer() {
     // const awakeColor = "#00d0ff";
     // const awakeColor = "#00ffee";
     const asleepColor = "#bf00ff";
+
+    // Browser Cache functionality
+    function getWakeTimeCache() {
+      try {
+        return localStorage.getItem("wakeTime");
+      }
+      catch(e){
+          console.error(e.message);
+          return "07:00";
+      }
+    }
+
+    function setWakeTimeCache(wakeTime) {
+      try {
+        localStorage.setItem("wakeTime", wakeTime);
+      } catch(e) {
+        console.log(e.message);
+      }
+    }
+
+    function getBedTimeCache() {
+      try {
+        return localStorage.getItem("bedTime");
+      }
+      catch(e){
+          console.error(e.message);
+          return "23:00";
+      }
+    }
+
+    function setBedTimeCache(bedTime) {
+      try {
+        localStorage.setItem("bedTime", bedTime);
+      } catch(e) {
+        console.log(e.message);
+      }
+    }
     
     // Clock functions
     function refreshClock() {
@@ -27,10 +64,14 @@ function Timer() {
 
     useEffect(() => {
       const timerId = setInterval(refreshClock, 1000);
+
+      setWakeTimeCache(wakeTime);
+      setBedTimeCache(bedTime);
+
       return function cleanup() {
         clearInterval(timerId);
       };
-    }, []);
+    }, [wakeTime, bedTime]);
 
     // Returns the difference in times in minutes: ( firstTime - secondTime ) % 24*60
     // Assumes firstTime and secondTime are in the form hh:mm, and gives them a default value if they are null
@@ -186,10 +227,10 @@ function Timer() {
           <TimePicker onChange={onBedTimeChange} value={bedTime} disableClock={true}/>
         </div>
         <div style={{ marginTop: 16 }}>
-          <a target="_blank" href="https://github.com/jelares/routine-timer">source</a>
+          <a target="_blank" href="https://github.com/jelares/routine-timer" rel="noreferrer">source</a>
         </div>
         <div>
-          <a target="_blank" href="https://account.venmo.com/u/Jesus-Lares-1">donations</a>
+          <a target="_blank" href="https://account.venmo.com/u/Jesus-Lares-1" rel="noreferrer">donations</a>
         </div>
       </div>
     );
