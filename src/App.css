@@ -3,6 +3,19 @@ body {
   color: #eee;
 }
 
+a:link {
+  color: #eee;
+}
+a:visited {
+  color: #eee;
+}
+a:hover {
+  color: #f54e4e;
+}
+a:active {
+  color: #bf00ff;
+}
+
 main {
   padding-top: 50px;
   max-width: 360px;

@@ -72,13 +72,9 @@ function Timer() {
       because I am too lazy to look up how to do it right atm.
     */
     function usTimeInEuropean(time) {
-      const str = time.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})
+      const str = time.toLocaleTimeString('en-UK', {hour: '2-digit', minute:'2-digit'})
       var hour = str.slice(0,2);
       const min = str.slice(3,5);
-
-      if (str.slice(6,8) === "PM") {
-        hour = (parseInt(hour) + 12).toString()
-      }
 
       return hour + ":" +min;
     }
@@ -188,6 +184,12 @@ function Timer() {
         <div style= {{marginBottom: 4}}>I go to bed at:</div>
         <div>
           <TimePicker onChange={onBedTimeChange} value={bedTime} disableClock={true}/>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <a target="_blank" href="https://github.com/jelares/routine-timer">source</a>
+        </div>
+        <div>
+          <a target="_blank" href="https://account.venmo.com/u/Jesus-Lares-1">donations</a>
         </div>
       </div>
     );
