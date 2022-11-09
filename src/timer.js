@@ -22,13 +22,14 @@ function Timer() {
 
     // Browser Cache functionality
     function getWakeTimeCache() {
-      try {
-        return localStorage.getItem("wakeTime");
+      var wakeTime;
+      wakeTime = localStorage.getItem("wakeTime");
+
+      if (wakeTime === null || wakeTime === 'null') {
+          wakeTime = "07:00";
       }
-      catch(e){
-          console.error(e.message);
-          return "07:00";
-      }
+
+      return wakeTime;
     }
 
     function setWakeTimeCache(wakeTime) {
@@ -40,13 +41,14 @@ function Timer() {
     }
 
     function getBedTimeCache() {
-      try {
-        return localStorage.getItem("bedTime");
+      var bedTime;
+      bedTime = localStorage.getItem("bedTime");
+
+      if (bedTime === null || bedTime === "null") {
+        bedTime = "23:00";
       }
-      catch(e){
-          console.error(e.message);
-          return "23:00";
-      }
+
+      return bedTime;
     }
 
     function setBedTimeCache(bedTime) {
